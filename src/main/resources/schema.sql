@@ -1,0 +1,32 @@
+-- 应用启动时执行。CREATE TABLE IF NOT EXISTS 保证重复启动不会报错。
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(64) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    display_name VARCHAR(64) NOT NULL,
+    role VARCHAR(32) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS products (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    sku VARCHAR(64) NOT NULL UNIQUE,
+    name VARCHAR(128) NOT NULL,
+    unit VARCHAR(32) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS stock_records (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT NOT NULL,
+    sku VARCHAR(64) NOT NULL,
+    product_name VARCHAR(128) NOT NULL,
+    type VARCHAR(16) NOT NULL,
+    quantity INT NOT NULL,
+    stock_after INT NOT NULL,
+    remark VARCHAR(255) NOT NULL DEFAULT '',
+    operator VARCHAR(64) NOT NULL,
+    created_at DATETIME NOT NULL
+);

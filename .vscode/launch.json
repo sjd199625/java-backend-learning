@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "WarehouseLearningApplication",
+      "request": "launch",
+      "mainClass": "com.example.warehouse.WarehouseLearningApplication",
+      "projectName": "java-backend-learning",
+      "shortenCommandLine": "argfile",
+      "console": "integratedTerminal"
+    }
+  ]
+}

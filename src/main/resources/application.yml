@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: java-backend-learning
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/warehouse?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+  jackson:
+    # 时间按上海时区输出，避免前端看到 UTC 差 8 小时。
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080
+
+warehouse:
+  jwt:
+    # 学习项目本地密钥。正式环境应放到环境变量，不要提交真实密钥。
+    secret: "java-backend-learning-demo-secret-key-32b"
+    expire-seconds: 86400

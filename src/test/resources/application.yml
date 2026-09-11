@@ -1,0 +1,26 @@
+# 测试走 H2 内存库，不写入本机 MySQL。
+# 测试 classpath 会盖掉主配置里的同名 application.yml，所以 JWT 也要写在这里。
+spring:
+  application:
+    name: java-backend-learning
+  datasource:
+    url: jdbc:h2:mem:warehouse;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+  jackson:
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080
+
+warehouse:
+  jwt:
+    secret: "java-backend-learning-demo-secret-key-32b"
+    expire-seconds: 86400
