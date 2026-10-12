@@ -7,6 +7,7 @@ import com.example.warehouse.product.Product;
 import com.example.warehouse.product.ProductRepository;
 import com.example.warehouse.user.User;
 import com.example.warehouse.user.UserRepository;
+import com.example.warehouse.user.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -46,7 +47,13 @@ public class DemoDataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (userRepository.findByUsername("admin").isPresent()) {
+        User existingAdmin = userRepository.findByUsername("admin").orElse(null);
+        if (existingAdmin != null) {
+            if (!UserRole.SUPER_ADMIN.equals(existingAdmin.getRole())) {
+                existingAdmin.setRole(UserRole.SUPER_ADMIN);
+                userRepository.save(existingAdmin);
+                log.info("已将演示账号 admin 升级为超级管理员");
+            }
             log.info("数据库已有数据，跳过演示数据初始化");
             return;
         }
@@ -55,7 +62,7 @@ public class DemoDataInitializer implements CommandLineRunner {
         admin.setUsername("admin");
         admin.setPasswordHash(passwordEncoder.encode("admin123"));
         admin.setDisplayName("仓库管理员");
-        admin.setRole("ADMIN");
+        admin.setRole(UserRole.SUPER_ADMIN);
         userRepository.save(admin);
 
         seedProduct("SKU-A001", "无线鼠标", "件", new BigDecimal("59.90"), 20);

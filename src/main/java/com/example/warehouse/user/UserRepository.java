@@ -92,4 +92,11 @@ public class UserRepository {
         );
         return users.stream().findFirst();
     }
+
+    public List<User> findAll() {
+        return jdbc.query(
+                "SELECT id, username, password_hash, display_name, role FROM users ORDER BY id",
+                ROW_MAPPER
+        );
+    }
 }

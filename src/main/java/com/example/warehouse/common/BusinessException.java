@@ -32,6 +32,10 @@ public class BusinessException extends RuntimeException {
         return new BusinessException(ErrorCode.UNAUTHORIZED, message, HttpStatus.UNAUTHORIZED);
     }
 
+    public static BusinessException forbidden(String message) {
+        return new BusinessException(ErrorCode.FORBIDDEN, message, HttpStatus.FORBIDDEN);
+    }
+
     public static BusinessException invalidCredentials() {
         return new BusinessException(
                 ErrorCode.INVALID_CREDENTIALS,

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * 认证接口。
@@ -54,5 +56,11 @@ public class AuthController {
     ) {
         authService.logout(authorization);
         return Result.success("已退出登录", null);
+    }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Result<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
+        return Result.success("注册成功", authService.register(request));
     }
 }

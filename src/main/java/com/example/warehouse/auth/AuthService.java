@@ -1,8 +1,11 @@
 package com.example.warehouse.auth;
 
 import com.example.warehouse.common.BusinessException;
+import com.example.warehouse.common.ErrorCode;
 import com.example.warehouse.user.User;
 import com.example.warehouse.user.UserRepository;
+import com.example.warehouse.user.UserRole;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +46,24 @@ public class AuthService {
                 jwtService.getExpireSeconds(),
                 toUserResponse(user)
         );
+    }
+
+    public UserResponse register(RegisterRequest request) {
+        if (userRepository.findByUsername(request.username()).isPresent()) {
+            throw BusinessException.conflict(ErrorCode.USERNAME_DUPLICATE, "用户名已存在");
+        }
+
+        User user = new User();
+        user.setUsername(request.username());
+        user.setPasswordHash(passwordEncoder.encode(request.password()));
+        user.setDisplayName(request.displayName());
+        user.setRole(UserRole.USER);
+
+        try {
+            return toUserResponse(userRepository.save(user));
+        } catch (DataIntegrityViolationException exception) {
+            throw BusinessException.conflict(ErrorCode.USERNAME_DUPLICATE, "用户名已存在");
+        }
     }
 
     public UserResponse currentUser() {

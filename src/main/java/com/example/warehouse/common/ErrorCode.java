@@ -16,11 +16,16 @@ public final class ErrorCode {
 
     public static final String UNAUTHORIZED = "UNAUTHORIZED";
     public static final String INVALID_CREDENTIALS = "INVALID_CREDENTIALS";
+    public static final String FORBIDDEN = "FORBIDDEN";
 
     public static final String PRODUCT_NOT_FOUND = "PRODUCT_NOT_FOUND";
     public static final String PRODUCT_SKU_DUPLICATE = "PRODUCT_SKU_DUPLICATE";
 
     public static final String STOCK_NOT_ENOUGH = "STOCK_NOT_ENOUGH";
+
+    public static final String USERNAME_DUPLICATE = "USERNAME_DUPLICATE";
+    public static final String USER_NOT_FOUND = "USER_NOT_FOUND";
+    public static final String INVALID_OLD_PASSWORD = "INVALID_OLD_PASSWORD";
 
     private ErrorCode() {
     }

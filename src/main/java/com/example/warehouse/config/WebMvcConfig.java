@@ -36,6 +36,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/api/**")
                 // 健康检查和登录必须放行，否则系统还没登录就谁都进不来。
-                .excludePathPatterns("/api/health", "/api/auth/login");
+                .excludePathPatterns("/api/health", "/api/auth/login", "/api/auth/register");
     }
 }
